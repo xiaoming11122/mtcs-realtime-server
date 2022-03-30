@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.ffcs.mtcs.realtime.server.mapper.RtOpsAttachmentMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.ffcs.mtcs.realtime.common.entity.RtOpsAttachment">
+        <id column="id" property="id" />
+        <result column="ops_id" property="opsId" />
+        <result column="exe_machine" property="exeMachine" />
+        <result column="ops_command" property="opsCommand" />
+        <result column="ops_param" property="opsParam" />
+        <result column="restart_type" property="restartType" />
+        <result column="restart_interval" property="restartInterval" />
+        <result column="restart_num" property="restartNum" />
+        <result column="fail_count" property="failCount" />
+        <result column="exe_id" property="exeId" />
+        <result column="exe_state" property="exeState" />
+        <result column="exe_result" property="exeResult" />
+        <result column="state" property="state" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, ops_id, exe_machine, ops_command, ops_param, restart_type, restart_interval, restart_num, fail_count, exe_id, exe_state, exe_result, state
+    </sql>
+
+</mapper>

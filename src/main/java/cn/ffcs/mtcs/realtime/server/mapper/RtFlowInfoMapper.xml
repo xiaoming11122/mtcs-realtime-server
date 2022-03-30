@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.ffcs.mtcs.realtime.server.mapper.RtFlowInfoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.ffcs.mtcs.realtime.common.entity.RtFlowInfo">
+        <id column="his_id" property="hisId" />
+        <result column="flow_id" property="flowId" />
+        <result column="flow_version" property="flowVersion" />
+        <result column="flow_code" property="flowCode" />
+        <result column="flow_name" property="flowName" />
+        <result column="engine" property="engine" />
+        <result column="flow_value" property="flowValue" />
+        <result column="flow_desc" property="flowDesc" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        his_id, flow_id, flow_version, flow_code, flow_name, engine, flow_value, flow_desc
+    </sql>
+
+</mapper>

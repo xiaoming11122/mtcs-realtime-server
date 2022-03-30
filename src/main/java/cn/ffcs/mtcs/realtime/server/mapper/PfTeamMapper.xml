@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.ffcs.mtcs.realtime.server.mapper.PfTeamMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.ffcs.mtcs.realtime.common.entity.PfTeam">
+        <id column="TEAM_ID" property="teamId" />
+        <result column="UP_TEAM_ID" property="upTeamId" />
+        <result column="TEAM_NAME" property="teamName" />
+        <result column="TEAM_DESC" property="teamDesc" />
+        <result column="TEAM_TYPE" property="teamType" />
+        <result column="USER_ID" property="userId" />
+        <result column="OPER_USER" property="operUser" />
+        <result column="CRT_TIME" property="crtTime" />
+        <result column="MDFY_TIME" property="mdfyTime" />
+        <result column="STATE" property="state" />
+        <result column="MEMO" property="memo" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        TEAM_ID, UP_TEAM_ID, TEAM_NAME, TEAM_DESC, TEAM_TYPE, USER_ID, OPER_USER, CRT_TIME, MDFY_TIME, STATE, MEMO
+    </sql>
+
+</mapper>

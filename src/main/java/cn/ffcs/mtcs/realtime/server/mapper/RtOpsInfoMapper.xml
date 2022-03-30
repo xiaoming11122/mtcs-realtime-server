@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.ffcs.mtcs.realtime.server.mapper.RtOpsInfoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.ffcs.mtcs.realtime.common.entity.RtOpsInfo">
+        <id column="ops_id" property="opsId" />
+        <result column="task_id" property="taskId" />
+        <result column="task_version" property="taskVersion" />
+        <result column="ops_type" property="opsType" />
+        <result column="ops_name" property="opsName" />
+        <result column="ops_desc" property="opsDesc" />
+        <result column="ops_user" property="opsUser" />
+        <result column="ops_team" property="opsTeam" />
+        <result column="crt_time" property="crtTime" />
+        <result column="state" property="state" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        ops_id, task_id, task_version, ops_type, ops_name, ops_desc, ops_user, ops_team, crt_time, state
+    </sql>
+
+</mapper>

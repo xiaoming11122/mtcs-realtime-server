@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.ffcs.mtcs.realtime.server.mapper.RtPluginsInfoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.ffcs.mtcs.realtime.common.entity.RtPluginsInfo">
+        <id column="plugin_id" property="pluginId" />
+        <result column="plugin_name" property="pluginName" />
+        <result column="plugin_code" property="pluginCode" />
+        <result column="plugins_version" property="pluginsVersion" />
+        <result column="exec_arg" property="execArg" />
+        <result column="plugins_desc" property="pluginsDesc" />
+        <result column="plugins_jar" property="pluginsJar" />
+        <result column="sort" property="sort" />
+        <result column="state" property="state" />
+        <result column="type_id" property="typeId" />
+        <result column="crt_time" property="crtTime" />
+        <result column="crt_user" property="crtUser" />
+        <result column="crt_team" property="crtTeam" />
+        <result column="mdfy_time" property="mdfyTime" />
+        <result column="mdfy_user" property="mdfyUser" />
+        <result column="mdfy_team" property="mdfyTeam" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        plugin_id, plugin_name, plugin_code, plugins_version, exec_arg, plugins_desc, sort, state, type_id, crt_time, crt_user, crt_team, mdfy_time, mdfy_user, mdfy_team
+    </sql>
+
+    <select id="listFlowPluginInfo" resultMap="BaseResultMap">
+        select
+            rpi.plugin_id,
+            rpi.plugin_name,
+            rpi.plugin_code,
+            rpi.plugins_version,
+            rtpr.plugin_content as exec_arg,
+            rpi.plugins_desc,
+            rpi.sort,
+            rpi.type_id
+        from rt_plugins_info rpi
+        right join rt_flow_plugin_relative rtpr
+        on rpi.plugin_id = rtpr.plugin_id
+        where rtpr.flow_id = #{flowId}
+        and rtpr.flow_version = #{flowVersion}
+    </select>
+
+    <select id="listFlowPluginInfoByTask" resultMap="BaseResultMap">
+        select
+            rpi.plugin_id,
+            rpi.plugin_name,
+            rpi.plugin_code,
+            rpi.plugins_version,
+            rtpr.plugin_content as exec_arg,
+            rpi.plugins_jar,
+            rpi.plugins_desc,
+            rpi.sort,
+            rpi.type_id
+        from rt_plugins_info rpi
+        right join rt_flow_plugin_relative rtpr
+        on rpi.plugin_id = rtpr.plugin_id
+        right join rt_task_flow_relative rtfr
+        on rtpr.flow_id = rtfr.flow_id
+        and rtpr.flow_version = rtfr.flow_version
+        where rtfr.task_id = #{taskId}
+        and rtfr.task_version = #{taskVersion}
+        and rtfr.state='10A'
+        ORDER BY rtpr.sort
+    </select>
+
+    <resultMap id="BaseResultMap1" type="java.util.Map">
+        <result column="container_id" jdbcType="VARCHAR" property="container_id" />
+        <result column="element_id" jdbcType="VARCHAR" property="element_id" />
+        <result column="element_type" jdbcType="VARCHAR" property="element_type" />
+        <result column="group_id" jdbcType="VARCHAR" property="group_id" />
+        <result column="element_key" jdbcType="VARCHAR" property="element_key" />
+        <result column="value_type" jdbcType="VARCHAR" property="value_type" />
+        <result column="element_value" jdbcType="VARCHAR" property="element_value" />
+        <result column="lable" jdbcType="VARCHAR" property="lable" />
+        <result column="value_remark" jdbcType="VARCHAR" property="value_remark" />
+        <result column="element_row" jdbcType="VARCHAR" property="element_row" />
+        <result column="element_order" jdbcType="VARCHAR" property="element_order" />
+        <result column="min_length" jdbcType="VARCHAR" property="min_length" />
+        <result column="max_length" jdbcType="VARCHAR" property="max_length" />
+        <result column="width" jdbcType="VARCHAR" property="width" />
+        <result column="height" jdbcType="VARCHAR" property="height" />
+        <result column="default_value" jdbcType="VARCHAR" property="default_value" />
+        <result column="is_must" jdbcType="VARCHAR" property="is_must" />
+        <result column="value_limit" jdbcType="VARCHAR" property="value_limit" />
+        <result column="value_limit_desc" jdbcType="VARCHAR" property="value_limit_desc" />
+        <result column="state" jdbcType="VARCHAR" property="state" />
+        <result column="state_time" jdbcType="VARCHAR" property="state_time" />
+    </resultMap>
+
+    <select id="getPluginElements" parameterType="java.lang.String" resultMap="BaseResultMap1">
+        select container_id,element_id,element_type,group_id,element_key,value_type,element_value,lable,value_remark,
+               element_row,element_order,min_length,max_length,width,height,default_value,is_must,value_limit,value_limit_desc,
+               state,state_time
+        from rt_html_elements where container_id in(select container_id from rt_plugins_rel_forms where plugin_id=#{pluginId,jdbcType=VARCHAR} )
+    </select>
+
+    <select id="getPluginOneLevel"  parameterType="java.util.Map"  resultType="java.util.Map">
+        select * from rt_etl_plugins_cfg_info_versions
+        where flow_id=#{flowId,jdbcType=VARCHAR} and flow_version=#{flowVersion,jdbcType=VARCHAR}
+        and inst_no=#{inst_no,jdbcType=VARCHAR}
+        and up_cfg_key_id is null
+    </select>
+
+    <select id="getPluginOtherLevel"  parameterType="java.util.Map"  resultType="java.util.Map">
+        select * from rt_etl_plugins_cfg_info_versions
+        where flow_id=#{flowId,jdbcType=VARCHAR} and flow_version=#{flowVersion,jdbcType=VARCHAR}
+        and  inst_no=#{inst_no,jdbcType=VARCHAR}
+        and  up_cfg_key_id=#{up_cfg_key_id,jdbcType=VARCHAR}
+    </select>
+
+
+    <select id="getPluginInstNo"  parameterType="java.util.Map"  resultType="java.util.Map">
+        select distinct inst_no from rt_etl_plugins_cfg_info_versions
+        where flow_id=#{flowId,jdbcType=VARCHAR}  and up_cfg_key_id is null and flow_version=#{flowVersion,jdbcType=VARCHAR}
+    </select>
+
+
+    <select id="selectPlugByEngine"  resultType="java.util.Map">
+        SELECT
+        A.type_name typeName,
+        B.plugin_name pluginName,
+        B.plugin_code pluginCode,
+        B.plugins_version pluginsVersion,
+        B.exec_arg execArg,
+        B.plugins_desc pluginsDesc,
+        A.sort typeSort,
+        B.sort infoSort,
+        B.engine engine,
+        B.crt_time crtTime,
+        B.mdfy_time mdfyTime
+        FROM
+        rt_plugins_type A
+        INNER JOIN rt_plugins_info B ON A.type_id = B.type_id
+        WHERE
+        A.state = '10A'
+        AND B.state = '10A'
+        <if test="engine != null">
+            AND A.engine = #{engine}
+        </if>
+        ORDER BY typeSort
+    </select>
+
+
+    <select id="selectPluginCheck" parameterType="java.lang.String" resultType="java.lang.String">
+       select check_type from rt_plugin_check where plugin_id=#{pluginId,jdbcType=VARCHAR} limit 1
+    </select>
+
+</mapper>

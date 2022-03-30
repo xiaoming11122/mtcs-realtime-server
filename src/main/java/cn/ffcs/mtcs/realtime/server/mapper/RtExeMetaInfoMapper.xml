@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.ffcs.mtcs.realtime.server.mapper.RtExeMetaInfoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.ffcs.mtcs.realtime.common.entity.RtExeMetaInfo">
+        <id column="exe_meta_id" property="exeMetaId" />
+        <result column="task_id" property="taskId" />
+        <result column="task_version" property="taskVersion" />
+        <result column="exe_machine" property="exeMachine" />
+        <result column="exe_command" property="exeCommand" />
+        <result column="exe_param" property="exeParam" />
+        <result column="restart_type" property="restartType" />
+        <result column="restart_interval" property="restartInterval" />
+        <result column="restart_num" property="restartNum" />
+        <result column="state" property="state" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        exe_meta_id, task_id, task_version, exe_machine, exe_command, exe_param, restart_type, restart_interval, restart_num, state
+    </sql>
+
+</mapper>

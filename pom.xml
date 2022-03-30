@@ -1,0 +1,624 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>cn.ffcs</groupId>
+    <artifactId>mtcs-realtime-server</artifactId>
+    <version>1.0</version>
+    <packaging>jar</packaging>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.0.6.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
+    <properties>
+        <java.version>1.8</java.version>
+        <spring-cloud.version>Finchley.SR2</spring-cloud.version>
+        <jackson-databind.version>2.11.2</jackson-databind.version>
+        <log4j.version>2.17.1</log4j.version>
+    </properties>
+    <!--maven私有仓库-->
+    <repositories>
+        <repository>
+            <id>mtcs</id>
+            <url>http://repo.itbg2.ffcs.cn:8001/nexus/repository/public/</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
+    </repositories>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-to-slf4j</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+        <!--flinksql检测依赖-->
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-table-planner-blink_2.11</artifactId>
+            <version>1.10.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.ffcs.mtcs</groupId>
+            <artifactId>mtcs-common</artifactId>
+            <version>1.0</version>
+        </dependency>
+
+        <!-- 该项目的公共依赖 -->
+        <dependency>
+            <groupId>cn.ffcs.mtcs</groupId>
+            <artifactId>mtcs-realtime-common</artifactId>
+            <version>1.0.8</version>
+        </dependency>
+
+        <!-- 版本管理服务 -->
+        <dependency>
+            <groupId>cn.ffcs.mtcs</groupId>
+            <artifactId>version-common</artifactId>
+            <version>1.1</version>
+        </dependency>
+
+        <!-- 获取当前用户 -->
+        <dependency>
+            <groupId>cn.ffcs.mtcs</groupId>
+            <artifactId>user-common</artifactId>
+            <version>1.2</version>
+        </dependency>
+
+
+        <!-- SSH服务-->
+        <dependency>
+            <groupId>cn.ffcs.mtcs</groupId>
+            <artifactId>mtcs-ssh-common</artifactId>
+            <version>2.1</version>
+        </dependency>
+
+        <!--加密工具包-->
+        <dependency>
+            <groupId>cn.ffcs.ty.common</groupId>
+            <artifactId>ty-common-basis</artifactId>
+            <version>1.0.0</version>
+            <exclusions>
+                <!-- test -->
+                <exclusion>
+                    <groupId>org.junit.jupiter</groupId>
+                    <artifactId>junit-jupiter-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.junit.jupiter</groupId>
+                    <artifactId>junit-jupiter-engine</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.junit.jupiter</groupId>
+                    <artifactId>junit-jupiter-params</artifactId>
+                </exclusion>
+
+                <!-- commons-io -->
+                <exclusion>
+                    <groupId>commons-io</groupId>
+                    <artifactId>commons-io</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.commons</groupId>
+                    <artifactId>commons-lang3</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.httpcomponents</groupId>
+                    <artifactId>httpclient</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.httpcomponents</groupId>
+                    <artifactId>httpcore</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>xml-apis</groupId>
+                    <artifactId>xml-apis</artifactId>
+                </exclusion>
+
+                <!-- base64 -->
+                <!--<exclusion>
+                    <groupId>org.bouncycastle</groupId>
+                    <artifactId>bcprov-jdk16</artifactId>
+                    <version>${base64.bcprov.version}</version>
+                </exclusion>-->
+
+                <exclusion>
+                    <groupId>org.apache.directory.studio</groupId>
+                    <artifactId>org.apache.commons.codec</artifactId>
+                </exclusion>
+
+                <!-- json -->
+                <exclusion>
+                    <groupId>com.alibaba</groupId>
+                    <artifactId>fastjson</artifactId>
+                </exclusion>
+
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-log4j12</artifactId>
+                </exclusion>
+
+                <!-- validator -->
+                <exclusion>
+                    <groupId>javax.validation</groupId>
+                    <artifactId>validation-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.hibernate</groupId>
+                    <artifactId>hibernate-validator</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.hibernate.validator</groupId>
+                    <artifactId>hibernate-validator-annotation-processor</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>javax.el</groupId>
+                    <artifactId>javax.el-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.glassfish.web</groupId>
+                    <artifactId>javax.el</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>javax.servlet.jsp</groupId>
+                    <artifactId>jsp-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.google.guava</groupId>
+                    <artifactId>guava</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!-- 微服务先关依赖包 -->
+        <!-- 注册中心 -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
+
+        <!-- 配置中心 -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-config</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-databind</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!-- 安全认证 -->
+        <!--<dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-oauth2</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-databind</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>-->
+
+        <!--添加feign依赖-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+        <!--Feign Form-->
+        <dependency>
+            <groupId>io.github.openfeign.form</groupId>
+            <artifactId>feign-form</artifactId>
+            <version>3.0.3</version>
+        </dependency>
+        <!--Feign json-->
+        <dependency>
+            <groupId>com.netflix.feign</groupId>
+            <artifactId>feign-jackson</artifactId>
+            <version>8.18.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-databind</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!-- swagger2 -->
+        <dependency>
+            <groupId>com.spring4all</groupId>
+            <artifactId>swagger-spring-boot-starter</artifactId>
+            <version>1.9.0.RELEASE</version>
+        </dependency>
+
+        <!-- 数据库操作 -->
+        <!-- 数据库相关操作 -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.11</version>
+        </dependency>
+        <!-- spring boot 与 mybatis plus 集成starter -->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <version>3.1.2</version>
+        </dependency>
+        <!-- mybatis plus 依赖 -->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus</artifactId>
+            <version>3.1.2</version>
+        </dependency>
+        <!--<dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid-spring-boot-starter</artifactId>
+            <version>1.1.18</version>
+        </dependency>-->
+
+
+        <!-- spring 相关依赖 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-databind</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!--<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
+        </dependency>-->
+        <!-- 支持多种格式的配置文件 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!--spring boot 缓存架构 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-cache</artifactId>
+        </dependency>
+
+
+        <!--spring boot 与kafka应用基本环境配置 -->
+        <!--      <dependency>
+                  <groupId>org.springframework.kafka</groupId>
+                  <artifactId>spring-kafka</artifactId>
+              </dependency>-->
+
+        <!--spring boot 与xxl-job应用基本环境配置 -->
+        <dependency>
+            <groupId>com.xuxueli</groupId>
+            <artifactId>xxl-job-core</artifactId>
+            <version>2.1.2</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.codehaus.groovy</groupId>
+                    <artifactId>groovy</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>groovy</artifactId>
+            <version>2.4.16</version>
+        </dependency>
+
+
+        <!-- 工具包 -->
+        <!-- 自动生成get set slf4j -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+
+        <!-- json -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.73</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>cn.ffcs.ty.common</groupId>
+            <artifactId>ty-common-basic</artifactId>
+            <version>1.0.1</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-log4j12</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>javax.servlet</groupId>
+                    <artifactId>servlet-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.google.guava</groupId>
+                    <artifactId>guava</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson-databind.version}</version>
+        </dependency>
+
+
+        <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-annotations -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>2.11.2</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>2.11.2</version>
+        </dependency>
+
+    </dependencies>
+
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+
+        <resources>
+            <!--默认资源文件-->
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*</include>
+                </includes>
+            </resource>
+            <!-- 如果不加，那么打包的时候mapper文件不会被加载进来 -->
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.properties</include>
+                    <include>**/*.xml</include>
+                </includes>
+            </resource>
+        </resources>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>target/lib</outputDirectory>
+                            <excludeTransitive>false</excludeTransitive>
+                            <stripVersion>false</stripVersion>
+                            <includeScope>runtime</includeScope>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <!-- The configuration of the plugin -->
+                <configuration>
+                    <!-- Configuration of the archiver -->
+                    <archive>
+
+                        <!--
+                            生成的jar中，不要包含pom.xml和pom.properties这两个文件
+                        -->
+                        <addMavenDescriptor>false</addMavenDescriptor>
+
+                        <!-- Manifest specific configuration -->
+                        <manifest>
+                            <!--
+                                是否要把第三方jar放到manifest的classpath中
+                            -->
+                            <addClasspath>true</addClasspath>
+                            <!--
+                               生成的manifest中classpath的前缀，因为要把第三方jar放到lib目录下，所以classpath的前缀是lib/
+                           -->
+                            <classpathPrefix>lib/</classpathPrefix>
+                            <!--
+                                应用的main class
+                            -->
+                            <mainClass>cn.ffcs.mtcs.RealtimeServerApplication</mainClass>
+
+
+                        </manifest>
+                    </archive>
+                    <!--
+                        过滤掉不希望包含在jar中的文件
+                    -->
+                    <!--  <excludes>
+                          <exclude>${project.basedir}/xml/*</exclude>
+                      </excludes>-->
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <descriptors>
+                        <descriptor>src/main/assembly/assembly.xml</descriptor>
+                    </descriptors>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+    <!-- 配置环境 -->
+    <profiles>
+        <!-- 西园开发，默认环境 -->
+        <profile>
+            <id>developXY</id>
+            <properties>
+                <deploy.type>developXY</deploy.type>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <!-- 福建生产 -->
+        <profile>
+            <id>prodFJ</id>
+            <properties>
+                <deploy.type>prodFJ</deploy.type>
+            </properties>
+        </profile>
+        <!-- 福建专区 -->
+        <profile>
+            <id>locFJ</id>
+            <properties>
+                <deploy.type>locFJ</deploy.type>
+            </properties>
+        </profile>
+        <!-- 福建用测 -->
+        <profile>
+            <id>usertestFJ</id>
+            <properties>
+                <deploy.type>usertestFJ</deploy.type>
+            </properties>
+        </profile>
+        <!-- 海南生产 -->
+        <profile>
+            <id>prodHN</id>
+            <properties>
+                <deploy.type>prodHN</deploy.type>
+            </properties>
+        </profile>
+        <!-- 海南用测 -->
+        <profile>
+            <id>usertestHN</id>
+            <properties>
+                <deploy.type>usertestHN</deploy.type>
+            </properties>
+        </profile>
+        <!-- 宁夏生产 -->
+        <profile>
+            <id>prodNX</id>
+            <properties>
+                <deploy.type>prodNX</deploy.type>
+            </properties>
+        </profile>
+        <!-- 云公司开发 -->
+        <profile>
+            <id>ctyun-develop</id>
+            <properties>
+                <deploy.type>ctyun-develop</deploy.type>
+            </properties>
+        </profile>
+        <!-- 云公司用测 -->
+        <profile>
+            <id>ctyun-usertest</id>
+            <properties>
+                <deploy.type>ctyun-usertest</deploy.type>
+            </properties>
+        </profile>
+        <!-- 云公司生产 -->
+        <profile>
+            <id>ctyun-prod</id>
+            <properties>
+                <deploy.type>ctyun-prod</deploy.type>
+            </properties>
+        </profile>
+        <!-- 数据中台西园开发 -->
+        <profile>
+            <id>ctyun-xydevelop</id>
+            <properties>
+                <deploy.type>ctyun-xydevelop</deploy.type>
+            </properties>
+        </profile>
+
+    </profiles>
+
+
+</project>

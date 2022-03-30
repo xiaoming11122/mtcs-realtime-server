@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.ffcs.mtcs.realtime.server.mapper.RtExeMachineMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.ffcs.mtcs.realtime.common.entity.RtExeMachine">
+        <id column="machine_id" property="machineId" />
+        <result column="host_name" property="hostName" />
+        <result column="ip_address" property="ipAddress" />
+        <result column="connect_port" property="connectPort" />
+        <result column="user_name" property="userName" />
+        <result column="pass_word" property="passWord" />
+        <result column="use_team" property="useTeam" />
+        <result column="use_engine" property="useEngine" />
+        <result column="machine_desc" property="machineDesc" />
+        <result column="crt_team" property="crtTeam" />
+        <result column="crt_time" property="crtTime" />
+        <result column="crt_user" property="crtUser" />
+        <result column="mdfy_time" property="mdfyTime" />
+        <result column="mdfy_user" property="mdfyUser" />
+        <result column="state" property="state" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        machine_id, host_name, ip_address, connect_port, user_name, pass_word, use_team, use_engine, machine_desc, crt_team, crt_time, crt_user, mdfy_time, mdfy_user, state
+    </sql>
+
+</mapper>

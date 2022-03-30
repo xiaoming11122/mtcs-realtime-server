@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.ffcs.mtcs.realtime.server.mapper.RtMonitorMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.ffcs.mtcs.realtime.common.entity.RtMonitor">
+        <id column="monitor_id" property="monitorId" />
+        <result column="ops_attachment_id" property="opsAttachmentId" />
+        <result column="task_id" property="taskId" />
+        <result column="task_version" property="taskVersion" />
+        <result column="retry_id" property="retryId" />
+        <result column="monitor_interval" property="monitorInterval" />
+        <result column="monitor_num" property="monitorNum" />
+        <result column="monitor_param" property="monitorParam" />
+        <result column="monitor_type" property="monitorType" />
+        <result column="monitor_expect" property="monitorExpect" />
+        <result column="xxl_job_id" property="xxlJobId" />
+        <result column="monitor_error_count" property="monitorErrorCount" />
+        <result column="monitor_count" property="monitorCount" />
+        <result column="monitor_actual" property="monitorActual" />
+        <result column="monitor_time" property="monitorTime" />
+        <result column="state" property="state" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        monitor_id, ops_attachment_id, task_id, task_version, retry_id, monitor_interval, monitor_num, monitor_param, monitor_type, monitor_expect, xxl_job_id, monitor_count, monitor_actual, monitor_time, state
+    </sql>
+
+</mapper>

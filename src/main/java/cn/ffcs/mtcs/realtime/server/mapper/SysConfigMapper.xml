@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.ffcs.mtcs.realtime.server.mapper.SysConfigMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.ffcs.mtcs.realtime.common.entity.SysConfig">
+        <id column="cfg_id" property="cfgId" />
+        <result column="cfg_parent_id" property="cfgParentId" />
+        <result column="cfg_module" property="cfgModule" />
+        <result column="cfg_source" property="cfgSource" />
+        <result column="cfg_key" property="cfgKey" />
+        <result column="cfg_key_desc" property="cfgKeyDesc" />
+        <result column="cfg_value" property="cfgValue" />
+        <result column="cfg_value_show" property="cfgValueShow" />
+        <result column="cfg_shared" property="cfgShared" />
+        <result column="cfg_extend" property="cfgExtend" />
+        <result column="cfg_extend_desc" property="cfgExtendDesc" />
+        <result column="cfg_order_id" property="cfgOrderId" />
+        <result column="cfg_remark" property="cfgRemark" />
+        <result column="crt_team" property="crtTeam" />
+        <result column="crt_time" property="crtTime" />
+        <result column="crt_user" property="crtUser" />
+        <result column="mdfy_time" property="mdfyTime" />
+        <result column="mdfy_user" property="mdfyUser" />
+        <result column="state" property="state" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        cfg_id, cfg_parent_id, cfg_module, cfg_source, cfg_key, cfg_key_desc, cfg_value, cfg_value_show, cfg_shared, cfg_extend, cfg_extend_desc, cfg_order_id, cfg_remark, crt_team, crt_time, crt_user, mdfy_time, mdfy_user, state
+    </sql>
+
+</mapper>

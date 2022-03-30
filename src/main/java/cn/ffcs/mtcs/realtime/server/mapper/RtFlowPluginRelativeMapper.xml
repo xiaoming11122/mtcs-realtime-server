@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.ffcs.mtcs.realtime.server.mapper.RtFlowPluginRelativeMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.ffcs.mtcs.realtime.common.entity.RtFlowPluginRelative">
+        <id column="rela_id" property="relaId" />
+        <result column="flow_id" property="flowId" />
+        <result column="flow_version" property="flowVersion" />
+        <result column="plugin_id" property="pluginId" />
+        <result column="plugin_content" property="pluginContent" />
+        <result column="sort" property="sort" />
+        <result column="crt_time" property="crtTime" />
+        <result column="mdfy_time" property="mdfyTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        rela_id, flow_id, flow_version, plugin_id, plugin_content, sort, crt_time, mdfy_time
+    </sql>
+
+    <select id="getFlowPluginRelativeByTaskId"
+            resultMap="BaseResultMap">
+        SELECT
+         t1.rela_id, t1.flow_id, t1.flow_version, t1.plugin_id, t1.plugin_content, t1.sort, t1.crt_time, t1.mdfy_time
+        FROM
+        rt_flow_plugin_relative t1
+        inner join rt_task_flow_relative t2
+        on t1.flow_id=t2.flow_id
+        and t1.flow_version=t2.flow_version
+        WHERE t2.task_id=#{taskId}
+        AND t2.task_version=#{taskVersion}
+        AND t2.state='10A'
+        ORDER BY t1.sort
+    </select>
+
+</mapper>

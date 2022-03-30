@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.ffcs.mtcs.realtime.server.mapper.MdVersionManageMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.ffcs.mtcs.version.common.entity.MdVersionManage">
+        <id column="version_id" property="versionId"/>
+        <result column="md_id" property="mdId"/>
+        <result column="md_type" property="mdType"/>
+        <result column="md_version" property="mdVersion"/>
+        <result column="md_version_state" property="mdVersionState"/>
+        <result column="crt_team" property="crtTeam"/>
+        <result column="crt_time" property="crtTime"/>
+        <result column="crt_user" property="crtUser"/>
+        <result column="mdfy_time" property="mdfyTime"/>
+        <result column="mdfy_user" property="mdfyUser"/>
+        <result column="state" property="state"/>
+        <result column="md_ver_release_info" property="mdVerReleaseInfo"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        version_id, md_id, md_type, md_version, md_version_state, crt_team, crt_time, crt_user, mdfy_time, mdfy_user, state, md_ver_release_info
+    </sql>
+
+    <select id="pageMdVersionManageByTaskName"
+            resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        md_version_manage t
+        WHERE t.crt_team=#{teamId}
+        AND t.md_type=#{mdType}
+        AND t.state='10A'
+        <if test="versionStateList != null">
+            AND t.md_version_state IN
+            <foreach collection="versionStateList" open="(" close=")" item="item" separator=",">
+                #{item}
+            </foreach>
+        </if>
+        AND t.md_id IN (
+        SELECT task_id FROM rt_task_info WHERE task_code LIKE "%"#{taskName}"%" OR task_name LIKE "%"#{taskName}"%"
+        )
+        ORDER BY md_id DESC,md_version DESC
+    </select>
+
+    <select id="pageMdVersionManageNew"
+            resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        md_version_manage t
+        WHERE  (t.md_id,md_version)
+            in (
+            select md_id,
+            max(md_version) md_version
+            from md_version_manage
+            where md_type = #{mdType}
+            and crt_team = #{teamId}
+            and state in ('10A','10U','10N')
+        <if test="taskName != null">
+            AND t.md_id IN (
+            SELECT task_id FROM rt_task_info WHERE task_code LIKE "%"#{taskName}"%" OR task_name LIKE "%"#{taskName}"%"
+            )
+        </if>
+         group by md_id order by version_id desc
+            )
+        and md_type = #{mdType}
+
+
+        ORDER BY mdfy_time DESC
+    </select>
+
+</mapper>

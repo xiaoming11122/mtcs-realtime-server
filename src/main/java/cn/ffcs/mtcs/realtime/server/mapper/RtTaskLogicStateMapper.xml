@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.ffcs.mtcs.realtime.server.mapper.RtTaskLogicStateMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.ffcs.mtcs.realtime.common.entity.RtTaskLogicState">
+        <id column="state_id" property="stateId"/>
+        <result column="task_id" property="taskId"/>
+        <result column="task_version" property="taskVersion"/>
+        <result column="task_state" property="taskState"/>
+        <result column="node_type" property="nodeType"/>
+        <result column="state_desc" property="stateDesc"/>
+        <result column="crt_user" property="crtUser"/>
+        <result column="crt_team" property="crtTeam"/>
+        <result column="crt_time" property="crtTime"/>
+        <result column="mdfy_user" property="mdfyUser"/>
+        <result column="mdfy_time" property="mdfyTime"/>
+        <result column="state" property="state"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        state_id, task_id, task_version, task_state, node_type, state_desc, crt_user, crt_team, crt_time, mdfy_user, mdfy_time, state
+    </sql>
+
+    <select id="pageRtTaskLogicStateByTaskName"
+            resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        rt_task_logic_state t
+        WHERE t.crt_team=#{teamId}
+        AND t.task_state=#{taskState}
+        AND t.state='10A'
+        AND t.task_id IN (
+        SELECT task_id FROM rt_task_info WHERE task_code LIKE "%"#{taskName}"%" OR task_name LIKE "%"#{taskName}"%"
+        )
+        GROUP BY task_id
+        ORDER BY task_id DESC
+    </select>
+
+    <select id="pageRtTaskLogicStateByTaskNameOffline"
+            resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        rt_task_logic_state t
+        WHERE t.crt_team=#{teamId}
+        AND t.task_state=#{taskState}
+        AND t.state='10A'
+        AND t.task_id IN (
+        SELECT task_id FROM rt_task_info WHERE task_code LIKE "%"#{taskName}"%" OR task_name LIKE "%"#{taskName}"%"
+        )
+        ORDER BY task_id DESC
+    </select>
+
+
+</mapper>

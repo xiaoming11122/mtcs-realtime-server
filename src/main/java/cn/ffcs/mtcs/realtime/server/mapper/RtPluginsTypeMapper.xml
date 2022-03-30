@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.ffcs.mtcs.realtime.server.mapper.RtPluginsTypeMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.ffcs.mtcs.realtime.common.entity.RtPluginsType">
+        <id column="type_id" property="typeId" />
+        <result column="type_name" property="typeName" />
+        <result column="type_code" property="typeCode" />
+        <result column="engine" property="engine" />
+        <result column="order_id" property="orderId" />
+        <result column="state" property="state" />
+        <result column="crt_time" property="crtTime" />
+        <result column="crt_user" property="crtUser" />
+        <result column="crt_team" property="crtTeam" />
+        <result column="mdfy_time" property="mdfyTime" />
+        <result column="mdfy_user" property="mdfyUser" />
+        <result column="mdfy_team" property="mdfyTeam" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        type_id, type_name, type_code, engine, order_id, state, crt_time, crt_user, crt_team, mdfy_time, mdfy_user, mdfy_team
+    </sql>
+
+</mapper>

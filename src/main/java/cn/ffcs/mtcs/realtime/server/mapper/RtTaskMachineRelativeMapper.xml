@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.ffcs.mtcs.realtime.server.mapper.RtTaskMachineRelativeMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.ffcs.mtcs.realtime.common.entity.RtTaskMachineRelative">
+        <id column="rela_id" property="relaId" />
+        <result column="task_id" property="taskId" />
+        <result column="task_version" property="taskVersion" />
+        <result column="machine_id" property="machineId" />
+        <result column="state" property="state" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        rela_id, task_id, task_version, machine_id, state
+    </sql>
+
+</mapper>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.ffcs.mtcs.realtime.server.mapper.RtParamInfoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.ffcs.mtcs.realtime.common.entity.RtParamInfo">
+        <id column="his_id" property="hisId" />
+        <result column="task_id" property="taskId" />
+        <result column="task_version" property="taskVersion" />
+        <result column="param_type" property="paramType" />
+        <result column="param_key" property="paramKey" />
+        <result column="param_show" property="paramShow" />
+        <result column="param_value" property="paramValue" />
+        <result column="param_desc" property="paramDesc" />
+        <result column="state" property="state" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        his_id, task_id, task_version, param_type, param_key, param_show, param_value, param_desc, state
+    </sql>
+
+</mapper>
